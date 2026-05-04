@@ -1,97 +1,109 @@
-body {
-margin: 0;
-font-family: 'Georgia', serif;
-background: black;
-color: white;
-overflow: hidden;
+let skipCount = 0;
+let punishCount = 0;
+let memIndex = 0;
+
+const memories = [
+{img:"assets/memories/m1_east7.jpeg", text:"East 77… one of my favourite memories"},
+{img:"assets/memories/m2_juhu.jpeg", text:"Juhu… where everything changed"},
+{img:"assets/memories/m3_dnj.jpeg", text:"Your laugh was everything"},
+];
+
+const punishImgs = [
+"assets/punish/p7_ignore.jpeg",
+"assets/punish/p9.jpeg",
+"assets/punish/p2_sad.jpeg",
+"assets/punish/p4_bomb.jpeg"
+];
+
+function show(id){
+document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
 }
 
-.screen {
-position: absolute;
-width: 100%;
-height: 100%;
-display: none;
-justify-content: center;
-align-items: center;
-flex-direction: column;
-text-align: center;
-padding: 20px;
+function start(){
+document.getElementById("bgm").play();
+show("s2");
 }
 
-.active {
-display: flex;
+function skip(){
+skipCount++;
+const btn = document.getElementById("skipBtn");
+
+const texts = [
+"your loss",
+"are you sure?",
+"Kay…",
+"i'll cry",
+"ok entering anyway"
+];
+
+btn.innerText = texts[skipCount-1] || texts[4];
+
+if(skipCount >= 5) start();
 }
 
-/* ENTRY */
-#entry {
-background: url("assets/special/bg1.png") center/cover;
+function goPunish(){
+show("s3");
 }
 
-.overlay {
-backdrop-filter: blur(8px);
-background: rgba(0,0,0,0.6);
-padding: 20px;
-border-radius: 12px;
+function punish(i){
+document.getElementById("punImg").src = punishImgs[i];
+punishCount++;
+
+if(punishCount >= 4){
+showCourt();
+}
 }
 
-button {
-margin-top: 15px;
-padding: 12px 20px;
-border: none;
-border-radius: 30px;
-background: #7C0116;
-color: white;
-font-size: 16px;
+function showCourt(){
+show("s4");
+
+const text = `
+ERROR 404
+
+GUILTY.
+
+You hurt her.
+You broke her trust.
+
+But…
+
+you still love her.
+`;
+
+document.getElementById("courtText").innerText = text;
 }
 
-#skipBtn {
-position: absolute;
-bottom: 60px;
+function goMem(){
+show("s5");
+playMem();
 }
 
-/* IMAGES */
-img {
-width: 90%;
-max-height: 70vh;
-border-radius: 12px;
-object-fit: cover;
+function playMem(){
+if(memIndex >= memories.length){
+show("s6");
+showLetter();
+return;
 }
 
-/* COURTROOM */
-#courtroom {
-background: url("assets/special/cr_1.jpeg") center/cover;
+document.getElementById("memImg").src = memories[memIndex].img;
+document.getElementById("memText").innerText = memories[memIndex].text;
+
+memIndex++;
+setTimeout(playMem, 3000);
 }
 
-#courtText {
-white-space: pre-line;
-line-height: 1.6;
-font-size: 18px;
+function showLetter(){
+document.getElementById("letterText").innerText =
+`I pizza you Kay.
+
+I made mistakes.
+
+But I will rebuild everything.
+
+— Vika`;
 }
 
-/* LETTER */
-#letter {
-background: url("assets/special/bg4.jpeg") center/cover;
-}
-
-.letterBox {
-backdrop-filter: blur(10px);
-background: rgba(0,0,0,0.7);
-padding: 20px;
-border-radius: 12px;
-max-height: 80vh;
-overflow-y: auto;
-}
-
-.finalBtns {
-margin-top: 20px;
-}
-
-/* SHAKE */
-@keyframes shake {
-0%,100% {transform: translateX(0);}
-25% {transform: translateX(-6px);}
-75% {transform: translateX(6px);}
-}
-.shake {
-animation: shake 0.3s;
+function end(){
+alert("i pizza you ❤️");
 }
