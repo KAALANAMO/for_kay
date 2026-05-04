@@ -10,63 +10,64 @@
 
 <body>
 
-<audio id="music" loop>
-  <source src="assets/audio/audio1.mp3" type="audio/mpeg">
-</audio>
+<audio id="bgm" src="assets/audio/audio1.mp3" loop></audio>
 
-<!-- ENTRY -->
+<!-- SECTION 1 -->
 
-<section id="entry" class="screen active">
-  <div class="overlay">
-    <h1>Hey Kay…</h1>
-    <p>I made something for you.</p>
-    <button onclick="start()">Listen to this idiot</button>
+<section id="s1" class="section active">
+  <div class="bg"></div>
+  <div class="modal">
+    <p>
+      Hey Kay…<br>
+      This is for you.
+    </p>
+    <button onclick="start()">listen to this idiot</button>
+    <button id="skipBtn" onclick="skip()">skip</button>
   </div>
-  <button id="skipBtn" onclick="skip()">Skip the nonsense</button>
 </section>
 
-<!-- MEMORIES -->
+<!-- SECTION 2 -->
 
-<section id="memories" class="screen">
+<section id="s2" class="section">
+  <img id="mug" src="assets/mug/ms1.jpeg">
+  <button onclick="goPunish()">view case file</button>
+</section>
+
+<!-- SECTION 3 -->
+
+<section id="s3" class="section">
+  <img id="punImg" src="assets/punish/p1_hurt.jpeg">
+
+  <div class="actions">
+    <button onclick="punish(0)">Ignore</button>
+    <button onclick="punish(1)">No phone</button>
+    <button onclick="punish(2)">Massage</button>
+    <button onclick="punish(3)">Bomb</button>
+  </div>
+</section>
+
+<!-- SECTION 4 -->
+
+<section id="s4" class="section">
+  <div class="court">
+    <p id="courtText"></p>
+    <button onclick="goMem()">continue</button>
+  </div>
+</section>
+
+<!-- SECTION 5 -->
+
+<section id="s5" class="section">
   <img id="memImg">
   <p id="memText"></p>
 </section>
 
-<!-- PUNISHMENT -->
+<!-- SECTION 6 -->
 
-<section id="punish" class="screen">
-  <img id="punImg">
-  <div class="punish-buttons">
-    <button onclick="doPunish(0)">Tickle</button>
-    <button onclick="doPunish(1)">Feed</button>
-    <button onclick="doPunish(2)">Bomb</button>
-    <button onclick="doPunish(3)">Ignore</button>
-    <button onclick="doPunish(4)">Nails</button>
-  </div>
-</section>
-
-<!-- COURTROOM -->
-
-<section id="courtroom" class="screen">
-  <div class="overlay">
-    <div id="courtText"></div>
-    <button id="courtBtn" onclick="showLetter()">Continue</button>
-  </div>
-</section>
-
-<!-- LETTER -->
-
-<section id="letter" class="screen">
-  <div class="letterBox">
+<section id="s6" class="section">
+  <div class="letter">
     <p id="letterText"></p>
-
-```
-<div class="finalBtns">
-  <button>I PIZZA YOU TOO ❤️</button>
-  <button>Bhaad mein jaa 😤</button>
-</div>
-```
-
+    <button onclick="end()">finish</button>
   </div>
 </section>
 
