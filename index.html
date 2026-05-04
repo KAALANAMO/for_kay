@@ -5,73 +5,215 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Kay ❤️</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+  margin:0;
+  font-family:serif;
+  background:#0e0305;
+  color:#FBF5EE;
+  overflow:hidden;
+}
+
+.section{
+  position:fixed;
+  width:100%;
+  height:100%;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+.section.active{display:flex;}
+
+.bg{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:blur(4px) brightness(0.5);
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+}
+
+button{
+  padding:12px 24px;
+  border:none;
+  border-radius:30px;
+  background:#7C0116;
+  color:white;
+  margin:10px;
+}
+
+img.main{
+  width:80%;
+  max-height:60vh;
+  border-radius:12px;
+}
+
+.fade{
+  animation:fade 1s ease;
+}
+
+@keyframes fade{
+  from{opacity:0}
+  to{opacity:1}
+}
+</style>
+
 </head>
 
 <body>
 
 <audio id="bgm" src="assets/audio/audio1.mp3" loop></audio>
 
-<!-- SECTION 1 -->
+<!-- ================= SECTION 1 ================= -->
 
-<section id="s1" class="section active">
-  <div class="bg"></div>
-  <div class="modal">
-    <p>
-      Hey Kay…<br>
-      This is for you.
-    </p>
+<div id="s1" class="section active">
+  <img class="bg" src="assets/special/bg1.png">
+  <div class="overlay"></div>
+
+  <div>
+    <p>Hey Kay… this is for you.</p>
     <button onclick="start()">listen to this idiot</button>
-    <button id="skipBtn" onclick="skip()">skip</button>
+    <button onclick="skip()">skip</button>
   </div>
-</section>
+</div>
 
-<!-- SECTION 2 -->
+<!-- ================= SECTION 2 ================= -->
 
-<section id="s2" class="section">
-  <img id="mug" src="assets/mug/ms1.jpeg">
-  <button onclick="goPunish()">view case file</button>
-</section>
+<div id="s2" class="section">
+  <img id="mug" class="main fade" src="assets/mug/ms1.jpeg">
+  <button onclick="nextMug()">next</button>
+</div>
 
-<!-- SECTION 3 -->
+<!-- ================= SECTION 3 ================= -->
 
-<section id="s3" class="section">
-  <img id="punImg" src="assets/punish/p1_hurt.jpeg">
+<div id="s3" class="section">
+  <img id="pun" class="main fade" src="assets/punish/p1_hurt.jpeg">
 
-  <div class="actions">
-    <button onclick="punish(0)">Ignore</button>
-    <button onclick="punish(1)">No phone</button>
-    <button onclick="punish(2)">Massage</button>
-    <button onclick="punish(3)">Bomb</button>
+<button onclick="punish(0)">ignore</button> <button onclick="punish(1)">no phone</button> <button onclick="punish(2)">massage</button> <button onclick="punish(3)">bomb</button>
+
+</div>
+
+<!-- ================= SECTION 4 ================= -->
+
+<div id="s4" class="section">
+  <img class="bg" src="assets/special/cr_1.jpeg">
+  <div class="overlay"></div>
+
+  <div>
+    <p>GUILTY. but still loves you.</p>
+    <button onclick="mem()">continue</button>
   </div>
-</section>
+</div>
 
-<!-- SECTION 4 -->
+<!-- ================= SECTION 5 ================= -->
 
-<section id="s4" class="section">
-  <div class="court">
-    <p id="courtText"></p>
-    <button onclick="goMem()">continue</button>
-  </div>
-</section>
-
-<!-- SECTION 5 -->
-
-<section id="s5" class="section">
-  <img id="memImg">
+<div id="s5" class="section">
+  <img id="mem" class="main fade">
   <p id="memText"></p>
-</section>
+</div>
 
-<!-- SECTION 6 -->
+<!-- ================= SECTION 6 ================= -->
 
-<section id="s6" class="section">
-  <div class="letter">
-    <p id="letterText"></p>
+<div id="s6" class="section">
+  <img class="bg" src="assets/special/bg4.jpeg">
+  <div class="overlay"></div>
+
+  <div>
+    <p id="letter"></p>
     <button onclick="end()">finish</button>
   </div>
-</section>
+</div>
 
-<script src="script.js"></script>
+<script>
+let mugIndex=0;
+let punishCount=0;
+let memIndex=0;
+
+const mugs=[
+"assets/mug/ms1.jpeg",
+"assets/mug/ms2.jpeg",
+"assets/mug/ms3.jpeg",
+"assets/mug/ms4.jpeg"
+];
+
+const punishImgs=[
+"assets/punish/p7_ignore.jpeg",
+"assets/punish/p9.jpeg",
+"assets/punish/p2_sad.jpeg",
+"assets/punish/p4_bomb.jpeg"
+];
+
+const memories=[
+{img:"assets/memories/m1_east7.jpeg",text:"East 77"},
+{img:"assets/memories/m2_juhu.jpeg",text:"Juhu"},
+{img:"assets/memories/m3_dnj.jpeg",text:"Dough & Joe"},
+{img:"assets/memories/m4_agatsu.jpeg",text:"Agatsu"}
+];
+
+function show(id){
+document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+function start(){
+document.getElementById("bgm").play();
+show("s2");
+}
+
+function skip(){
+start();
+}
+
+function nextMug(){
+mugIndex++;
+if(mugIndex>=mugs.length){
+show("s3");
+return;
+}
+document.getElementById("mug").src=mugs[mugIndex];
+}
+
+function punish(i){
+document.getElementById("pun").src=punishImgs[i];
+punishCount++;
+
+if(punishCount>=4){
+show("s4");
+}
+}
+
+function mem(){
+show("s5");
+playMem();
+}
+
+function playMem(){
+if(memIndex>=memories.length){
+show("s6");
+document.getElementById("letter").innerText=
+"I pizza you Kay. I will fix everything.";
+return;
+}
+
+document.getElementById("mem").src=memories[memIndex].img;
+document.getElementById("memText").innerText=memories[memIndex].text;
+
+memIndex++;
+setTimeout(playMem,2500);
+}
+
+function end(){
+alert("i pizza you ❤️");
+}
+</script>
 
 </body>
 </html>
