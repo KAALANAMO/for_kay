@@ -1,231 +1,418 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Kay — from Vika</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-8
-<style>
-:root {
---cherry: #7C0116;
---cherry-light: #a8021e;
---hibiscus: #E0A4B0;
---hibiscus-dim: rgba(224,164,176,0.4);
---cream: #FBF5EE;
---dark: #0e0305;
---dark2: #1a0507;
---dark3: #2a0d10;
---gold: #C9A84C;
-}
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html, body { width:100%; height:100%; overflow:hidden; }
-body {
-font-family:'Lora',serif;
-background:var(--dark);
-color:var(--cream);
--webkit-font-smoothing:antialiased;
-}
-.section{
-  position:fixed;
-  width:100%;
-  height:100%;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-}
-
-.section.active{display:flex;}
-
-.bg{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:blur(4px) brightness(0.5);
-}
-
-.overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.5);
-}
-
-button{
-  padding:12px 24px;
-  border:none;
-  border-radius:30px;
-  background:#7C0116;
-  color:white;
-  margin:10px;
-}
-
-img.main{
-  width:80%;
-  max-height:60vh;
-  border-radius:12px;
-}
-
-.fade{
-  animation:fade 1s ease;
-}
-
-@keyframes fade{
-  from{opacity:0}
-  to{opacity:1}
-}
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Kay — from Vika</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
 
-<audio id="bgm" src="assets/audio/audio1.mp3" loop></audio>
+  <!-- ══════════════════════════════════════
+       BACKGROUND AUDIO
+  ══════════════════════════════════════ -->
+  <audio id="bgm" src="assets/audio/audio1.mp3" loop preload="none"></audio>
 
-<!-- ================= SECTION 1 ================= -->
+  <!-- ══════════════════════════════════════
+       SECTION 1 — LANDING / MEMORY WALL
+  ══════════════════════════════════════ -->
+  <section id="s1" class="section active">
+    <div class="s1-bg"></div>
+    <div class="s1-vignette"></div>
+  </section>
 
-<div id="s1" class="section active">
-  <img class="bg" src="assets/special/bg1.png">
-  <div class="overlay"></div>
-
-  <div>
-    <p>Hey Kay… this is for you.</p>
-    <button onclick="start()">listen to this idiot</button>
-    <button onclick="skip()">skip</button>
+  <!-- Landing Modal -->
+  <div class="overlay" id="landing-modal">
+    <div class="modal-box landing-modal-box">
+      <div class="modal-popup-bg"></div>
+      <div class="modal-content">
+        <p class="modal-lead">Hey <strong>Kay</strong>...</p>
+        <p class="modal-body">
+          I know it's been more than a week.<br />
+          But I don't think it's too late<br />
+          to show you how much you mean to me.<br /><br />
+          This is all for my gorgeous <strong>sweet potato</strong> 🍠
+        </p>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="listen-btn" onclick="App.startJourney()">listen to this idiot 🎧</button>
+          <button class="btn btn-ghost" id="skip-btn" onclick="App.handleSkip()">skip the nonsense</button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- ================= SECTION 2 ================= -->
+  <!-- ══════════════════════════════════════
+       SECTION 2 — MUGSHOT SLIDESHOW
+  ══════════════════════════════════════ -->
+  <section id="s2" class="section">
+    <div class="mug-slides" id="mug-slides">
+      <div class="mug-slide active"><img src="assets/mug/ms1.jpeg" alt="mugshot front" /></div>
+      <div class="mug-slide"><img src="assets/mug/ms2.jpeg" alt="mugshot side" /></div>
+      <div class="mug-slide"><img src="assets/mug/ms3.jpeg" alt="mugshot profile" /></div>
+      <div class="mug-slide"><img src="assets/mug/ms4.jpeg" alt="mugshot back" /></div>
+    </div>
+    <div class="mug-gradient"></div>
+    <div class="mug-caption">
+      <div class="mug-accused">ACCUSED "VIKA" — NO. 4020</div>
+      <div class="mug-crime">CRIME: HURTING KAY, AND TELLING LIES.</div>
+      <button class="btn btn-primary" id="view-case-btn" onclick="App.showFIR()">view case file ⚖️</button>
+    </div>
+  </section>
 
-<div id="s2" class="section">
-  <img id="mug" class="main fade" src="assets/mug/ms1.jpeg">
-  <button onclick="nextMug()">next</button>
-</div>
-
-<!-- ================= SECTION 3 ================= -->
-
-<div id="s3" class="section">
-  <img id="pun" class="main fade" src="assets/punish/p1_hurt.jpeg">
-
-<button onclick="punish(0)">ignore</button> <button onclick="punish(1)">no phone</button> <button onclick="punish(2)">massage</button> <button onclick="punish(3)">bomb</button>
-
-</div>
-
-<!-- ================= SECTION 4 ================= -->
-
-<div id="s4" class="section">
-  <img class="bg" src="assets/special/cr_1.jpeg">
-  <div class="overlay"></div>
-
-  <div>
-    <p>GUILTY. but still loves you.</p>
-    <button onclick="mem()">continue</button>
+  <!-- FIR Overlay -->
+  <div class="overlay hidden" id="fir-overlay">
+    <div class="fir-box">
+      <img src="assets/mug/mg5.jpeg" alt="Police FIR" class="fir-img" />
+      <div class="fir-footer">
+        <p class="fir-stamp">CASE REGISTERED — ACCUSED "VIKA" TAKEN INTO CUSTODY<br />
+        CHARGES: EMOTIONAL HARM · DECEPTION · TELLING LIES · CORRUPTING MEMORIES</p>
+        <button class="btn btn-primary" onclick="App.goToPunishment()">proceed to sentencing →</button>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- ================= SECTION 5 ================= -->
+  <!-- ══════════════════════════════════════
+       SECTION 3 — PUNISHMENT GAME
+  ══════════════════════════════════════ -->
+  <section id="s3" class="section">
 
-<div id="s5" class="section">
-  <img id="mem" class="main fade">
-  <p id="memText"></p>
-</div>
+    <div class="pun-header">
+      <h1 class="pun-title">The Court of Kay — Sentencing Chamber</h1>
+      <div class="pun-counter" id="pun-counter">punishments administered: 0 — deliver at least 5 to proceed</div>
+    </div>
 
-<!-- ================= SECTION 6 ================= -->
+    <div class="jail-stage">
+      <img id="vika-img" class="vika-main" src="assets/punish/p3_sorry.jpeg" alt="Vika" />
 
-<div id="s6" class="section">
-  <img class="bg" src="assets/special/bg4.jpeg">
-  <div class="overlay"></div>
+      <!-- Left side buttons -->
+      <button class="pun-btn pun-tl" onclick="App.punish(0)"><span class="pun-emo">🙄</span>Ignore him</button>
+      <button class="pun-btn pun-ml" onclick="App.punish(1)"><span class="pun-emo">📵</span>No phone, 1 week</button>
+      <button class="pun-btn pun-bl" onclick="App.punish(2)"><span class="pun-emo">💣</span>Explode him!</button>
+      <button class="pun-btn pun-ltop" onclick="App.punish(3)"><span class="pun-emo">🫛</span>Feed him peas</button>
+      <button class="pun-btn pun-lbot" onclick="App.punish(4)"><span class="pun-emo">💔</span>Talk about ex</button>
 
-  <div>
-    <p id="letter"></p>
-    <button onclick="end()">finish</button>
+      <!-- Right side buttons -->
+      <button class="pun-btn pun-tr" onclick="App.punish(5)"><span class="pun-emo">🪶</span>Tickle him</button>
+      <button class="pun-btn pun-mr" onclick="App.punish(6)"><span class="pun-emo">💅</span>Make him do nails</button>
+      <button class="pun-btn pun-br" onclick="App.punish(7)"><span class="pun-emo">🚫</span>Block him</button>
+      <button class="pun-btn pun-rtop" onclick="App.punish(8)"><span class="pun-emo">📖</span>Lecture him</button>
+      <button class="pun-btn pun-rbot" onclick="App.openWriteOwn()"><span class="pun-emo">✍️</span>Write own</button>
+    </div>
+
+    <div class="reaction-bar" id="reaction-bar"></div>
+
+    <div class="verdict-unlock hidden" id="verdict-unlock">
+      <button class="btn btn-primary btn-large" onclick="App.showError404()">read the verdict ⚖️</button>
+    </div>
+
+  </section>
+
+  <!-- Write Your Own Modal -->
+  <div class="overlay hidden" id="write-modal">
+    <div class="modal-box write-box">
+      <p class="modal-body">Go ahead, cupcake. Decree a future punishment for the court records 🖊️</p>
+      <textarea id="pun-input" class="pun-textarea" placeholder="type your punishment here..."></textarea>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="App.saveOwn()">Court Approved ⚖️</button>
+        <button class="btn btn-ghost" onclick="App.closeWriteOwn()">cancel</button>
+      </div>
+    </div>
   </div>
-</div>
 
-<script>
-let mugIndex=0;
-let punishCount=0;
-let memIndex=0;
+  <!-- ══════════════════════════════════════
+       ERROR 404 OVERLAY
+  ══════════════════════════════════════ -->
+  <div class="overlay hidden" id="error-modal">
+    <div class="error-bg-img"><img src="assets/special/cr_1.jpeg" alt="" /></div>
+    <div class="error-box">
+      <div class="error-code">ERROR<br/>404</div>
+      <div class="error-sub">CONSCIENCE NOT FOUND — SUBJECT GUILTY AS CHARGED</div>
+      <div class="error-question">
+        The court has deliberated.<br />
+        Do you wish to accept his apology<br />
+        and make him your <em>Viku</em> again?
+      </div>
+      <div class="verdict-choice">
+        <div class="choice-card" onclick="App.chooseViraj()">
+          <span class="choice-name">Viraj</span>
+          <span class="choice-sub">still in trouble 😤</span>
+        </div>
+        <div class="choice-card choice-card-vika" onclick="App.chooseVika()">
+          <span class="choice-name">Vika</span>
+          <span class="choice-sub">forgiven 🫶</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-const mugs=[
-"assets/mug/ms1.jpeg",
-"assets/mug/ms2.jpeg",
-"assets/mug/ms3.jpeg",
-"assets/mug/ms4.jpeg"
-];
+  <!-- ══════════════════════════════════════
+       SECTION 4 — COURTROOM VERDICT
+  ══════════════════════════════════════ -->
+  <section id="s4" class="section">
+    <img class="court-bg" src="assets/special/cr_1.jpeg" alt="courtroom" />
+    <div class="court-tint"></div>
+    <div class="verdict-panel scroll-box">
+      <div class="verdict-hdr">In the Court of Love and Trust</div>
+      <div class="verdict-case">Case No. 21-45897 — The Matter of Vika vs. His Own Stupidity</div>
+      <div class="verdict-body">
+        <p>The accused stands before this court having committed the gravest of offenses — not against the law, but against someone who deserved only honesty.</p>
+        <p>The charges are serious. Emotional harm. Deception. Lies told to a heart that trusted him completely. A panic attack caused. An anxiety triggered. Memories clouded. A trust, once whole, fractured into silence.</p>
+        <hr class="verdict-rule" />
+        <p>And yet — in this chamber of truth, something rare has been observed.</p>
+        <p>A fool who did not run. Who laid every ugly mistake bare — not to escape consequence, but because she deserved to know. Because she was worth the honesty, even when it cost him everything.</p>
+        <p>The love submitted as evidence is... undeniable. Every act, every page of this case, every moment of quiet care — inadmissible in any rational court, and yet impossible to ignore.</p>
+        <hr class="verdict-rule" />
+        <p class="verdict-label">VERDICT</p>
+        <p>Guilty. Of being a complete and utter idiot.<br />And of loving Ms. Kay with every broken, imperfect piece of himself.</p>
+        <hr class="verdict-rule" />
+        <p class="verdict-label">SENTENCE</p>
+        <p>A lifetime of proving himself — one honest moment at a time.</p>
+        <p>Should he ever again commit crimes against the most magnificent duggu on this planet, his heart shall be confiscated permanently. Ms. Kay shall be free to leave him exactly where he belongs.</p>
+        <p>But should he stay true — this court recommends that Ms. Kay consider the evidence before her.</p>
+        <p class="verdict-final"><em>Some idiots are, in fact, worth keeping.</em></p>
+      </div>
+      <div class="verdict-footer">
+        <button class="btn btn-primary btn-large" onclick="App.goToMemories()">restore our memories →</button>
+      </div>
+    </div>
+  </section>
 
-const punishImgs=[
-"assets/punish/p7_ignore.jpeg",
-"assets/punish/p9.jpeg",
-"assets/punish/p2_sad.jpeg",
-"assets/punish/p4_bomb.jpeg"
-];
+  <!-- ══════════════════════════════════════
+       SECTION 5 — MEMORY RESTORATION
+  ══════════════════════════════════════ -->
+  <section id="s5" class="section section-scroll">
 
-const memories=[
-{img:"assets/memories/m1_east7.jpeg",text:"East 77"},
-{img:"assets/memories/m2_juhu.jpeg",text:"Juhu"},
-{img:"assets/memories/m3_dnj.jpeg",text:"Dough & Joe"},
-{img:"assets/memories/m4_agatsu.jpeg",text:"Agatsu"}
-];
+    <!-- Heart HUD -->
+    <div class="heart-hud" id="heart-hud">
+      <div class="heart-icon" id="hrt-icon">🤍</div>
+      <div class="heart-track"><div class="heart-prog" id="hrt-prog"></div></div>
+      <div class="heart-pct" id="hrt-pct">0%</div>
+    </div>
 
-function show(id){
-document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-}
+    <div class="mem-header">
+      <h2 class="mem-title">broken memories</h2>
+      <p class="mem-subtitle">tap each one to bring it back, kaykuri 🤍</p>
+    </div>
 
-function start(){
-document.getElementById("bgm").play();
-show("s2");
-}
+    <div class="mem-grid" id="mem-grid">
 
-function skip(){
-start();
-}
+      <!-- 1. East 77 -->
+      <div class="mem-card" data-state="0" onclick="App.tapMemory(this)">
+        <img src="assets/memories/m1_east7.jpeg" alt="East 77" />
+        <svg class="crack-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><path d="M200,0 L185,80 L150,120 L200,180 L175,300" stroke="white" stroke-width="1.5" fill="none" opacity="0.45"/><path d="M0,120 L120,130 L200,180 L300,155 L400,165" stroke="white" stroke-width="0.8" fill="none" opacity="0.25"/><path d="M320,0 L310,60 L280,100" stroke="white" stroke-width="0.8" fill="none" opacity="0.2"/></svg>
+        <div class="mem-label">
+          <div class="mem-place">East 77</div>
+          <div class="mem-liner">Do you remember the enter &amp; insert joke? 😂 From that day to this, you keep getting better at entering pg-13 territory. One of my best memories with you.</div>
+        </div>
+        <button class="mem-tap-btn">tap to restore ✦</button>
+      </div>
 
-function nextMug(){
-mugIndex++;
-if(mugIndex>=mugs.length){
-show("s3");
-return;
-}
-document.getElementById("mug").src=mugs[mugIndex];
-}
+      <!-- 2. Juhu Beach -->
+      <div class="mem-card" data-state="0" onclick="App.tapMemory(this)">
+        <img src="assets/memories/m2_juhu.jpeg" alt="Juhu Beach" />
+        <svg class="crack-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><path d="M80,0 L90,70 L60,110 L100,160 L80,300" stroke="white" stroke-width="1.5" fill="none" opacity="0.45"/><path d="M0,180 L140,170 L200,200 L400,190" stroke="white" stroke-width="0.8" fill="none" opacity="0.22"/></svg>
+        <div class="mem-label">
+          <div class="mem-place">Juhu Beach</div>
+          <div class="mem-liner">The place where we bonded so deeply. Our first cuddle. You shared your family troubles. And that promise — I will never bring anyone else here. Only you.</div>
+        </div>
+        <button class="mem-tap-btn">tap to restore ✦</button>
+      </div>
 
-function punish(i){
-document.getElementById("pun").src=punishImgs[i];
-punishCount++;
+      <!-- 3. Dough & Joe's -->
+      <div class="mem-card" data-state="0" onclick="App.tapMemory(this)">
+        <img src="assets/memories/m3_dnj.jpeg" alt="Dough and Joes" />
+        <svg class="crack-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><path d="M300,0 L290,90 L320,130 L280,220 L300,300" stroke="white" stroke-width="1.5" fill="none" opacity="0.45"/><path d="M0,100 L180,115 L300,130 L400,120" stroke="white" stroke-width="0.8" fill="none" opacity="0.22"/></svg>
+        <div class="mem-label">
+          <div class="mem-place">Dough &amp; Joe's</div>
+          <div class="mem-liner">You levelled up your flirting that night. Your laugh was more gorgeous than the entire ambience. You were furious about my father — and yet, you were so happy.</div>
+        </div>
+        <button class="mem-tap-btn">tap to restore ✦</button>
+      </div>
 
-if(punishCount>=4){
-show("s4");
-}
-}
+      <!-- 4. Agatsu 1 -->
+      <div class="mem-card" data-state="0" onclick="App.tapMemory(this)">
+        <img src="assets/memories/m4_agatsu1.jpeg" alt="Agatsu" />
+        <svg class="crack-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><path d="M200,0 L210,50 L170,100 L220,150 L190,300" stroke="white" stroke-width="1.5" fill="none" opacity="0.45"/><path d="M0,80 L160,100 L220,150 L400,140" stroke="white" stroke-width="0.8" fill="none" opacity="0.22"/></svg>
+        <div class="mem-label">
+          <div class="mem-place">Agatsu — Where It All Started</div>
+          <div class="mem-liner">The place where I met you for the first time — the happiest accident of my life. From working buddies to best friends. This place holds everything.</div>
+        </div>
+        <button class="mem-tap-btn">tap to restore ✦</button>
+      </div>
 
-function mem(){
-show("s5");
-playMem();
-}
+      <!-- 5. Agatsu 2 -->
+      <div class="mem-card" data-state="0" onclick="App.tapMemory(this)">
+        <img src="assets/memories/m5_agatsu2.jpeg" alt="Agatsu 2" />
+        <svg class="crack-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><path d="M140,0 L130,60 L160,110 L120,190 L140,300" stroke="white" stroke-width="1.5" fill="none" opacity="0.45"/><path d="M0,160 L150,145 L260,165 L400,150" stroke="white" stroke-width="0.8" fill="none" opacity="0.22"/></svg>
+        <div class="mem-label">
+          <div class="mem-place">Agatsu — Our First Reel</div>
+          <div class="mem-liner">We shot our first reel right here. Laughing, messing up, laughing again. The beginning of all the good things. I still smile every time I think about it.</div>
+        </div>
+        <button class="mem-tap-btn">tap to restore ✦</button>
+      </div>
 
-function playMem(){
-if(memIndex>=memories.length){
-show("s6");
-document.getElementById("letter").innerText=
-"I pizza you Kay. I will fix everything.";
-return;
-}
+      <!-- 6. The Car 1 -->
+      <div class="mem-card" data-state="0" onclick="App.tapMemory(this)">
+        <img src="assets/memories/m6_car1.jpeg" alt="The Car" />
+        <svg class="crack-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><path d="M150,0 L160,60 L130,100 L180,160 L155,300" stroke="white" stroke-width="1.5" fill="none" opacity="0.45"/><path d="M0,150 L130,160 L250,145 L400,155" stroke="white" stroke-width="0.8" fill="none" opacity="0.22"/></svg>
+        <div class="mem-label">
+          <div class="mem-place">The Car — Night Drives</div>
+          <div class="mem-liner">First time I danced and flirted to distract you while you drove. Fighting for my food. Watching the trees from the sunroof. From fun to deep — all in one drive.</div>
+        </div>
+        <button class="mem-tap-btn">tap to restore ✦</button>
+      </div>
 
-document.getElementById("mem").src=memories[memIndex].img;
-document.getElementById("memText").innerText=memories[memIndex].text;
+      <!-- 7. The Car 2 -->
+      <div class="mem-card" data-state="0" onclick="App.tapMemory(this)">
+        <img src="assets/memories/m7_car2.jpeg" alt="The Car 2" />
+        <svg class="crack-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><path d="M260,0 L250,80 L280,130 L240,210 L260,300" stroke="white" stroke-width="1.5" fill="none" opacity="0.45"/><path d="M0,130 L200,145 L280,130 L400,140" stroke="white" stroke-width="0.8" fill="none" opacity="0.22"/></svg>
+        <div class="mem-label">
+          <div class="mem-place">The Car — Sukoon</div>
+          <div class="mem-liner">We shared our deepest secrets and scariest memories here. Sleeping in your lap — the first time I felt truly home. Pure sukoon. I had never felt that before.</div>
+        </div>
+        <button class="mem-tap-btn">tap to restore ✦</button>
+      </div>
 
-memIndex++;
-setTimeout(playMem,2500);
-}
+      <!-- 8. R Adda & Juhu 1 -->
+      <div class="mem-card" data-state="0" onclick="App.tapMemory(this)">
+        <img src="assets/memories/m8_rnb1.jpeg" alt="R Adda Night 1" />
+        <svg class="crack-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><path d="M100,0 L110,70 L80,120 L120,200 L100,300" stroke="white" stroke-width="1.5" fill="none" opacity="0.45"/><path d="M0,100 L200,120 L300,110 L400,115" stroke="white" stroke-width="0.8" fill="none" opacity="0.22"/></svg>
+        <div class="mem-label">
+          <div class="mem-place">R Adda &amp; Juhu — The Drunk Night</div>
+          <div class="mem-liner">First time we saw each other drunk. Turns out your capacity was way higher than mine 😂. The fake birthday surprise. Your smile that night was absolutely magical.</div>
+        </div>
+        <button class="mem-tap-btn">tap to restore ✦</button>
+      </div>
 
-function end(){
-alert("i pizza you ❤️");
-}
-</script>
+      <!-- 9. R Adda & Juhu 2 -->
+      <div class="mem-card" data-state="0" onclick="App.tapMemory(this)">
+        <img src="assets/memories/m9_rnb2.jpeg" alt="R Adda Night 2" />
+        <svg class="crack-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><path d="M250,0 L240,70 L270,120 L230,200 L250,300" stroke="white" stroke-width="1.5" fill="none" opacity="0.45"/><path d="M0,80 L180,100 L270,90 L400,95" stroke="white" stroke-width="0.8" fill="none" opacity="0.22"/></svg>
+        <div class="mem-label">
+          <div class="mem-place">R Adda &amp; Juhu — Kay &amp; Viku</div>
+          <div class="mem-liner">Your kay-viku talk. Tera mujhse ruthna. Seeing you at your most honest phase — you looked so cute drunk. And ps. I am still sorry for that first drunk kiss. 🥺</div>
+        </div>
+        <button class="mem-tap-btn">tap to restore ✦</button>
+      </div>
 
+      <!-- 10. R Adda & Juhu 3 -->
+      <div class="mem-card" data-state="0" onclick="App.tapMemory(this)">
+        <img src="assets/memories/m10_rnb3.jpeg" alt="R Adda Night 3" />
+        <svg class="crack-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><path d="M180,0 L170,80 L200,130 L160,220 L180,300" stroke="white" stroke-width="1.5" fill="none" opacity="0.45"/><path d="M0,160 L170,145 L400,160" stroke="white" stroke-width="0.8" fill="none" opacity="0.22"/></svg>
+        <div class="mem-label">
+          <div class="mem-place">R Adda &amp; Juhu — Midnight</div>
+          <div class="mem-liner">Sitting by the water under the moon after everything. The quiet between us. Some nights just stay with you forever — this is one of mine.</div>
+        </div>
+        <button class="mem-tap-btn">tap to restore ✦</button>
+      </div>
+
+      <!-- 11. Sunflower & Letter -->
+      <div class="mem-card" data-state="0" onclick="App.tapMemory(this)">
+        <img src="assets/memories/m11_letter.jpeg" alt="Sunflower and Letter" />
+        <svg class="crack-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><path d="M100,0 L115,90 L80,140 L120,220 L100,300" stroke="white" stroke-width="1.5" fill="none" opacity="0.45"/><path d="M0,140 L80,150 L200,135 L400,145" stroke="white" stroke-width="0.8" fill="none" opacity="0.22"/></svg>
+        <div class="mem-label">
+          <div class="mem-place">Sunflower &amp; The Letter 🌻</div>
+          <div class="mem-liner">I had never seen you that happy. You gave me flowers — I had happy tears you don't even know. Blushing holding the sunflower. Niche sofe pe, cctv off, and our cuddle. 🌻</div>
+        </div>
+        <button class="mem-tap-btn">tap to restore ✦</button>
+      </div>
+
+    </div><!-- /mem-grid -->
+
+    <div class="to-letter-wrap hidden" id="to-letter-wrap">
+      <button class="btn btn-primary btn-large" onclick="App.goToLetter()">i pizza you, kay — read my letter →</button>
+    </div>
+
+  </section>
+
+  <!-- Memory Verdict Popup -->
+  <div class="overlay hidden" id="mem-verdict-modal">
+    <div class="modal-box">
+      <p class="modal-body">
+        Viraj promises he will protect these memories<br />
+        more than his own life.<br /><br />
+        So, duggu... do you believe him?
+      </p>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="App.closeMV()">give him one more chance 🌻</button>
+        <button class="btn btn-ghost" onclick="App.closeMV()">no... he will lie again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 6 — THE LETTER
+  ══════════════════════════════════════ -->
+  <section id="s6" class="section">
+    <div class="letter-bg"></div>
+    <div class="letter-tint"></div>
+    <div class="letter-wrap scroll-box">
+      <div class="letter-date">May 2026 — Written with a full heart, no strategy.</div>
+      <div class="letter-dear">Dear Kay,</div>
+      <div class="letter-body">
+        <p>You know, I had never imagined seeing you at your worst. I never thought that a single lie could hurt you this much — could break someone at such a deep level.</p>
+        <p>I have learned my lesson. I am aware that my one mistake unraveled all the good we had built together. And I will keep rebuilding it, memory by memory, so you never regret calling me your friend.</p>
+        <p>Your friendship is a blessing to me. Your presence means everything. You made me experience what it truly feels like to care for someone so deeply — and none of this is an effort, or some "bakas strategy" as you would say. Everything I do comes from love and care. Purely.</p>
+        <p>Your smile is so addictive to me that I would do anything to see it. All of this comes naturally — I cannot even figure out how I became so invested in one person. Everything about this is new to me. You are new to me.</p>
+        <p>Be it this life or another, I will still want to see you happy and dancing out of joy. This is not guilt. This is not strategy. This is just — purely you. Whatever this feeling is, it is pure.</p>
+        <p>You always say I am good with my words. Maybe. But you made me better with my actions. I am more careful now — with my words, my promises, my truth. Whatever I have promised you will become real. My actions will speak louder. <span class="hindi">Terese mujhe bohot seekhne mila</span> — about love, friendship, and how a single lie can kill trust. I owe you that lesson more than you know.</p>
+        <p>If nothing else, I hope you know — I pizza you, from the deepest ground of my heart.</p>
+        <p>And I am not in love with you. But even if I were to fall someday — I would not regret a single second of it. Who could not fall for a soul this gorgeous? And even if our friendship ends somewhere down the road — it would not matter. Every single second I spent with you will have been worth it. Every one of them.</p>
+        <p>I am the luckiest person to call you my friend, duggu. I hope you realize your importance — not only to me, but to every single person lucky enough to know you.</p>
+        <p>When you are feeling down and at your worst — remember I only ever want your happiness. I am here. I fully intend on staying in your life for a long time. As your best friend. Nothing more, nothing less.</p>
+        <p>I appreciate you without restraint and without expecting anything in return. I do not need anything from you. I am just selflessly here.</p>
+        <p>Even if all of this feels too good to be true — let it be. Because it is true. Just accept it. Believe it. You will not regret it. I will take care of your trust with my heart.</p>
+        <p><span class="hindi">Tu meri short timing hai, but best timing hai.</span> Thank you for trusting me with your friendship. <span class="hindi">Jab tak hai tab tak — tujhe regret hone nahi dunga.</span> I will show you what it feels like to be truly cared for. You do not have to be scared. I will not break your trust. I know the boundaries.</p>
+        <p>And I am truly sorry if this is overwhelming.</p>
+        <p class="letter-closing-line">You are my incomplete wish.</p>
+        <p class="letter-closing-line">I pizza you, Kay.<br />I adore you, duggu.</p>
+      </div>
+      <div class="letter-sign">
+        Signing off —<br />
+        Your Gadhera,<br />
+        <em>"Vika"</em>
+      </div>
+      <div class="letter-footer-btn">
+        <button class="btn btn-primary btn-large" onclick="App.showFinalModal()">one last thing, kaykuri →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       FINAL POPUP
+  ══════════════════════════════════════ -->
+  <div class="overlay hidden" id="final-modal">
+    <div class="final-bg-img"></div>
+    <div class="modal-box final-box">
+      <p class="final-msg">
+        <strong>I pizza you, duggu. 🍕</strong><br /><br />
+        Whether as your best friend or your serial killer —
+        I will always be there beside you, like your shadow.
+        The name and the tag don't matter to me.<br /><br />
+        What matters most is your happiness. Your smile.<br /><br />
+        I will never hurt you this deeply again.
+        My heart cannot bear to see you at your worst.
+      </p>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="App.endJourney(true)">I pizza you too 🍕</button>
+        <button class="btn btn-ghost" onclick="App.endJourney(false)">bhaad mai jaa 😤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       END SCREEN
+  ══════════════════════════════════════ -->
+  <div id="end-screen" class="hidden">
+    <div class="end-content">
+      <div class="end-big" id="end-big">i pizza you too 🌻</div>
+      <div class="end-small">— always, your vika</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
