@@ -1,0 +1,97 @@
+body {
+margin: 0;
+font-family: 'Georgia', serif;
+background: black;
+color: white;
+overflow: hidden;
+}
+
+.screen {
+position: absolute;
+width: 100%;
+height: 100%;
+display: none;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+text-align: center;
+padding: 20px;
+}
+
+.active {
+display: flex;
+}
+
+/* ENTRY */
+#entry {
+background: url("assets/special/bg1.png") center/cover;
+}
+
+.overlay {
+backdrop-filter: blur(8px);
+background: rgba(0,0,0,0.6);
+padding: 20px;
+border-radius: 12px;
+}
+
+button {
+margin-top: 15px;
+padding: 12px 20px;
+border: none;
+border-radius: 30px;
+background: #7C0116;
+color: white;
+font-size: 16px;
+}
+
+#skipBtn {
+position: absolute;
+bottom: 60px;
+}
+
+/* IMAGES */
+img {
+width: 90%;
+max-height: 70vh;
+border-radius: 12px;
+object-fit: cover;
+}
+
+/* COURTROOM */
+#courtroom {
+background: url("assets/special/cr_1.jpeg") center/cover;
+}
+
+#courtText {
+white-space: pre-line;
+line-height: 1.6;
+font-size: 18px;
+}
+
+/* LETTER */
+#letter {
+background: url("assets/special/bg4.jpeg") center/cover;
+}
+
+.letterBox {
+backdrop-filter: blur(10px);
+background: rgba(0,0,0,0.7);
+padding: 20px;
+border-radius: 12px;
+max-height: 80vh;
+overflow-y: auto;
+}
+
+.finalBtns {
+margin-top: 20px;
+}
+
+/* SHAKE */
+@keyframes shake {
+0%,100% {transform: translateX(0);}
+25% {transform: translateX(-6px);}
+75% {transform: translateX(6px);}
+}
+.shake {
+animation: shake 0.3s;
+}
